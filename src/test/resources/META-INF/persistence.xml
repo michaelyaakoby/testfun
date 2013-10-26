@@ -1,0 +1,25 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
+
+    <persistence-unit name="tests">
+
+        <jar-file>target/classes</jar-file>
+
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306?user=root&amp;password=ugauga"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <!--
+                to support @GeneratedValue(AUTO)
+                see the following for more info:
+                https://docs.jboss.org/author/display/AS71/JPA+Reference+Guide#JPAReferenceGuide-Persistenceunitproperties
+                https://community.jboss.org/thread/170623?start=0&tstart=0
+            -->
+            <property name="hibernate.id.new_generator_mappings" value="false"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
