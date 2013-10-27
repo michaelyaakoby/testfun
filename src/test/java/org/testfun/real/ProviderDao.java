@@ -6,5 +6,5 @@ import java.util.List;
 @Local
 public interface ProviderDao {
     Provider save(Provider t);
-    List getAll();
+    List<Provider> getAll();
 }

@@ -24,7 +24,11 @@
     <option name="FILTER_BY_CURRENT_PROJECT" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" name="Default" comment="" />
+    <list default="true" id="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDao.java" afterPath="$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="testfun.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/a.dummy" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382826415073" ignored="false" />
@@ -32,11 +36,28 @@
     <file path="$USER_HOME$/AppData/Local/Temp/intellijad/com/netapp/wfa/common/ExceptionUtils.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382823720066" ignored="false" />
     <file path="$USER_HOME$/AppData/Local/Temp/intellijad/org/hamcrest/MatcherAssert.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382824579083" ignored="false" />
     <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/common/model/BaseEntity.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382825041920" ignored="false" />
-    <file path="/Dummy.txt" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382825685875" ignored="false" />
+    <file path="/Dummy.txt" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382905238810" ignored="false" />
     <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/common/dao/BaseEntityDaoImpl.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382825445279" ignored="false" />
     <file path="/ProviderDaoImpl.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382825511305" ignored="false" />
     <file path="/EjbInstanceFactory.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382826303015" ignored="false" />
     <file path="/SingletonDataSource.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382826597821" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/rs/cloud/CloudConfigurationResourceTest.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026900" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/rs/cloud/CloudConfigurationServiceImpl.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026900" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/planner/dao/impl/VcloudDaoImplTest.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026900" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/rs/AccountResourceTest.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026900" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/rs/OnpremiseResource.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026900" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/planner/execution/PlannerImplTest.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026900" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/planner/execution/PlannerImpl.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/rs/cloud/CloudConfiguration.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/planner/execution/ServerIpAddressingImplTest.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/planner/execution/ServerAddressingImpl.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/planner/dao/VcloudDao.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/rs/cloud/CloudConfigurationServiceImplTest.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/planner/dao/impl/VcloudDaoImpl.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/test/java/com/netapp/noc2/rs/cloud/CloudConfigurationBuilder.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="$PROJECT_DIR$/../noc/war/src/main/java/com/netapp/noc2/rs/model/Account.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382904026901" ignored="false" />
+    <file path="/fragment.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382905169572" ignored="false" />
+    <file path="/ProviderDao.java" changelist="6b6d77cd-cf77-4933-9c4b-f21fb990ef61" time="1382905311731" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +127,9 @@
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="176" column="12" selection-start="6114" selection-end="6114" vertical-scroll-proportion="0.0">
-              <folding />
+              <folding>
+                <marker date="1382825767126" expanded="true" signature="1268:1457" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +156,12 @@
         <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.1/junit-4.8.1-sources.jar!/org/junit/runners/BlockJUnit4ClassRunner.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="253" column="0" selection-start="8804" selection-end="8804" vertical-scroll-proportion="0.0">
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#8659#8796#0" expanded="false" />
+                <element signature="e#8790#8791#0" expanded="false" />
+                <element signature="e#12271#12283#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,29 +175,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExpectedConstraintViolation.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ExpectedConstraintViolation.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/testfun/ExpectedConstraintViolation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="13" selection-start="538" selection-end="538" vertical-scroll-proportion="-4.0688524">
+            <state line="114" column="20" selection-start="3674" selection-end="3674" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassPathScanner.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/testfun/runner/inject/ClassPathScanner.java">
+      <file leaf-file-name="EjbWithMockitoRunnerSelfTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/testfun/EjbWithMockitoRunnerSelfTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="52" selection-start="3916" selection-end="3916" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EjbInstanceFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/testfun/runner/inject/EjbInstanceFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="82" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="115" column="64" selection-start="4079" selection-end="4079" vertical-scroll-proportion="0.5488959">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -199,6 +220,14 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
@@ -210,13 +239,13 @@
         <option value="$PROJECT_DIR$/src/test/java/org/testfun/JsonCollectionAsMemberTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/testfun/EjbWithMockitoRunnerSelfTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/testfun/real/Provider.java" />
-        <option value="$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDao.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDaoImpl.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/java/org/testfun/InjectionUtilsTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/testfun/runner/inject/EjbInstanceFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/testfun/runner/SingletonDataSource.java" />
         <option value="$PROJECT_DIR$/src/test/resources/META-INF/persistence.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDao.java" />
       </list>
     </option>
   </component>
@@ -266,7 +295,7 @@
     <option name="width" value="1382" />
     <option name="height" value="784" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -442,7 +471,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="MavenSettings" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -453,6 +482,11 @@
     <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.testfun.jee" />
+    </key>
   </component>
   <component name="RunManager" selected="JUnit.org.testfun in testfun">
     <configuration default="false" name="org.testfun in testfun" type="JUnit" factoryName="JUnit" temporary="true">
@@ -495,8 +529,8 @@
       <module name="testfun" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="org.testfun" />
-      <option name="MAIN_CLASS_NAME" value="org.testfun.EjbWithMockitoRunnerSelfTest" />
+      <option name="PACKAGE_NAME" value="org.testfun.jee" />
+      <option name="MAIN_CLASS_NAME" value="org.testfun.jee.EjbWithMockitoRunnerSelfTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -651,11 +685,31 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3248" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -670,12 +724,12 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6176" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20075758" sideWeight="0.6176" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20075758" sideWeight="0.6704" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24848485" sideWeight="0.6176" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3824" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24848485" sideWeight="0.6704" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3824" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -764,29 +818,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="11" selection-start="124" selection-end="124" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/testfun/InjectionUtilsTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="71" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/testfun/EjbWithMockitoRunnerSelfTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="16" selection-start="5709" selection-end="5709" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -803,14 +839,20 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/org/testfun/runner/inject/ClassPathScanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="119" column="52" selection-start="3916" selection-end="3916" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/testfun/runner/inject/EjbInstanceFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="82" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1539#3065#0" expanded="false" />
+            <element signature="e#3050#3051#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -824,14 +866,21 @@
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.1/junit-4.8.1-sources.jar!/org/junit/runners/BlockJUnit4ClassRunner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="253" column="0" selection-start="8804" selection-end="8804" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#8659#8796#0" expanded="false" />
+            <element signature="e#8790#8791#0" expanded="false" />
+            <element signature="e#12271#12283#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="176" column="12" selection-start="6114" selection-end="6114" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <marker date="1382825767126" expanded="true" signature="1268:1457" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -865,8 +914,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/testfun/ExpectedConstraintViolation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="538" selection-end="538" vertical-scroll-proportion="-4.0688524">
+        <state line="114" column="20" selection-start="3674" selection-end="3674" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/testfun/real/ProviderDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="18" selection-start="162" selection-end="162" vertical-scroll-proportion="0.22201492">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/testfun/EjbWithMockitoRunnerSelfTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="115" column="64" selection-start="4079" selection-end="4079" vertical-scroll-proportion="0.5488959">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
