@@ -1,7 +1,2 @@
 # The following list of providers is needed to enable validation during unit tests.
 # When deployed in a WAR, teh container reads the @Provider annotations properly.
-com.netapp.noc2.rs.validation.ValidatorContextResolver
-com.netapp.noc2.rs.validation.ValidationExceptionMapper
-com.netapp.noc2.rs.exception.NocExceptionMapper
-com.netapp.noc2.rs.exception.FailureMapper
-com.netapp.noc2.rs.exception.ThrowableMapper
