@@ -65,16 +65,16 @@ public class EjbWithMockitoRunnerSelfTest {
     public void testEjbInjection() {
         // Test reading from DB using a DAO which uses JPA
         List<SomeEntity> all = someDao.getAll();
-        assertFalse("No providers were found", all.isEmpty());
+        assertTrue("No entities were found", all.isEmpty());
 
         // Test writing to DB using a DAO which uses JPA
-        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        SomeEntity newSomeEntity = new SomeEntity(0, "name", "address");
         assertEquals("Entity ID", newSomeEntity.getId(), 0);
         someDao.save(newSomeEntity);
         assertTrue("Entity ID > 0", newSomeEntity.getId() > 0);
 
         // write to DB second time to make sure transactions are not committed nor rolled back
-        someDao.save(new SomeEntity("name2", "another address"));
+        someDao.save(new SomeEntity(0, "name2", "another address"));
         assertEquals("Added two new providers", all.size() + 2, someDao.getAll().size());
 
         // Make sure tests can fail (well... this test can't really guarantee this but it tries :D)
@@ -105,7 +105,7 @@ public class EjbWithMockitoRunnerSelfTest {
     @Test
     public void testPersistenceInjection() throws SQLException {
         // Add a new provider using the entity manager directly (instead of an EJB)
-        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        SomeEntity newSomeEntity = new SomeEntity(0, "name", "address");
         entityManager.persist(newSomeEntity);
         assertTrue("Entity ID > 0", newSomeEntity.getId() > 0);
 
@@ -113,7 +113,7 @@ public class EjbWithMockitoRunnerSelfTest {
         int newId;
         try(Connection connection = dataSource.getConnection()){
             try(Statement statement = connection.createStatement()) {
-                try(ResultSet results = statement.executeQuery("SELECT id FROM noc.provider WHERE name='name'")) {
+                try(ResultSet results = statement.executeQuery("SELECT id FROM tmp.some_entity WHERE name='name'")) {
                     results.next();
                     newId = results.getInt(1);
                 }
@@ -124,7 +124,7 @@ public class EjbWithMockitoRunnerSelfTest {
 
     @Test
     public void testNonAppExceptionRollsBack() {
-        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        SomeEntity newSomeEntity = new SomeEntity(0, "name", "address");
         someDao.save(newSomeEntity);
 
         try {
@@ -137,7 +137,7 @@ public class EjbWithMockitoRunnerSelfTest {
 
     @Test
     public void testAppException() {
-        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        SomeEntity newSomeEntity = new SomeEntity(0, "name", "address");
         someDao.save(newSomeEntity);
 
         try {
@@ -150,7 +150,7 @@ public class EjbWithMockitoRunnerSelfTest {
 
     @Test
     public void testRollingBackAppException() {
-        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        SomeEntity newSomeEntity = new SomeEntity(0, "name", "address");
         someDao.save(newSomeEntity);
 
         try {

@@ -32,7 +32,7 @@ public class GettingStartedTest {
 
     @Test
     public void multipleEntities() {
-        when(dao.getAll()).thenReturn(Arrays.asList(new SomeEntity("kuki", "puki")));
-        assertEquals(new SomeEntity("kuki", "puki"), facade.getFirstEntity());
+        when(dao.getAll()).thenReturn(Arrays.asList(new SomeEntity(0, "kuki", "puki")));
+        assertEquals(new SomeEntity(0, "kuki", "puki"), facade.getFirstEntity());
     }
 }

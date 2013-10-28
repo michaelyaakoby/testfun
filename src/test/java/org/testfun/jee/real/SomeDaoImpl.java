@@ -9,7 +9,7 @@ import java.util.List;
 @Stateless
 public class SomeDaoImpl implements SomeDao {
 
-    @PersistenceContext(unitName = "noc")
+    @PersistenceContext(unitName = "TestFun")
     private EntityManager entityManager;
 
     @Override
@@ -25,7 +25,7 @@ public class SomeDaoImpl implements SomeDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<SomeEntity> getAll() {
-        Query query = entityManager.createQuery("FROM Provider AS be");
+        Query query = entityManager.createQuery("FROM SomeEntity AS be");
         return query.getResultList();
     }
 
