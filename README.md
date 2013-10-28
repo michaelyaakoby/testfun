@@ -117,7 +117,7 @@ public class GettingStartedTest {
     }
 }
 ```
-**Note** that by mocking the `private SomeDao dao` member variable, any EJB asking for `SomeDao` to be injected will recieve the sam mock. 
+**Note** that by mocking the `private SomeDao dao` member variable, any EJB asking for `SomeDao` to be injected will recieve the same mock. 
 
 Special thanks to...
 --------------------
