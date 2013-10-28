@@ -7,10 +7,10 @@ import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@NamedQueries(@NamedQuery(name = Provider.QUERY_PROVIDER_BY_NAME, query = "SELECT p FROM Provider AS p WHERE p.name = :name"))
+@NamedQueries(@NamedQuery(name = SomeEntity.QUERY_PROVIDER_BY_NAME, query = "SELECT p FROM SomeEntity AS p WHERE p.name = :name"))
 @Table(catalog = "noc", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Entity
-public class Provider {
+public class SomeEntity {
     public static final String QUERY_PROVIDER_BY_NAME = "QUERY_PROVIDER_BY_NAME";
 
     @Id
@@ -21,9 +21,9 @@ public class Provider {
 
     private String vcdApiAddress;
 
-    public Provider(){}
+    public SomeEntity(){}
 
-    public Provider(String name, String vcdApiAddress) {
+    public SomeEntity(String name, String vcdApiAddress) {
         this.name = name;
         this.vcdApiAddress = vcdApiAddress;
     }

@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.testfun.jee.real.Provider;
-import org.testfun.jee.real.ProviderDao;
+import org.testfun.jee.real.SomeEntity;
+import org.testfun.jee.real.SomeDao;
 import org.testfun.jee.runner.SingletonEntityManager;
 
 import javax.annotation.Resource;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 public class EjbWithMockitoRunnerSelfTest {
 
     @EJB
-    private ProviderDao providerDao;
+    private SomeDao someDao;
 
     @EJB
     private EjbLocal ejb;
@@ -64,18 +64,18 @@ public class EjbWithMockitoRunnerSelfTest {
     @Test
     public void testEjbInjection() {
         // Test reading from DB using a DAO which uses JPA
-        List<Provider> all = providerDao.getAll();
+        List<SomeEntity> all = someDao.getAll();
         assertFalse("No providers were found", all.isEmpty());
 
         // Test writing to DB using a DAO which uses JPA
-        Provider newProvider = new Provider("name", "address");
-        assertEquals("Provider ID", newProvider.getId(), 0);
-        providerDao.save(newProvider);
-        assertTrue("Provider ID > 0", newProvider.getId() > 0);
+        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        assertEquals("Entity ID", newSomeEntity.getId(), 0);
+        someDao.save(newSomeEntity);
+        assertTrue("Entity ID > 0", newSomeEntity.getId() > 0);
 
         // write to DB second time to make sure transactions are not committed nor rolled back
-        providerDao.save(new Provider("name2", "another address"));
-        assertEquals("Added two new providers", all.size() + 2, providerDao.getAll().size());
+        someDao.save(new SomeEntity("name2", "another address"));
+        assertEquals("Added two new providers", all.size() + 2, someDao.getAll().size());
 
         // Make sure tests can fail (well... this test can't really guarantee this but it tries :D)
         String message = "Expected failure";
@@ -105,9 +105,9 @@ public class EjbWithMockitoRunnerSelfTest {
     @Test
     public void testPersistenceInjection() throws SQLException {
         // Add a new provider using the entity manager directly (instead of an EJB)
-        Provider newProvider = new Provider("name", "address");
-        entityManager.persist(newProvider);
-        assertTrue("Provider ID > 0", newProvider.getId() > 0);
+        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        entityManager.persist(newSomeEntity);
+        assertTrue("Entity ID > 0", newSomeEntity.getId() > 0);
 
         // Use a JDBC connection to read the newly added provider, make sure calling close doesn't close the connection...
         int newId;
@@ -119,13 +119,13 @@ public class EjbWithMockitoRunnerSelfTest {
                 }
             }
         }
-        assertEquals("Provider ID", newProvider.getId(), newId);
+        assertEquals("Entity ID", newSomeEntity.getId(), newId);
     }
 
     @Test
     public void testNonAppExceptionRollsBack() {
-        Provider newProvider = new Provider("name", "address");
-        providerDao.save(newProvider);
+        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        someDao.save(newSomeEntity);
 
         try {
             ejb.nonAppException();
@@ -137,8 +137,8 @@ public class EjbWithMockitoRunnerSelfTest {
 
     @Test
     public void testAppException() {
-        Provider newProvider = new Provider("name", "address");
-        providerDao.save(newProvider);
+        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        someDao.save(newSomeEntity);
 
         try {
             ejb.appException();
@@ -150,8 +150,8 @@ public class EjbWithMockitoRunnerSelfTest {
 
     @Test
     public void testRollingBackAppException() {
-        Provider newProvider = new Provider("name", "address");
-        providerDao.save(newProvider);
+        SomeEntity newSomeEntity = new SomeEntity("name", "address");
+        someDao.save(newSomeEntity);
 
         try {
             ejb.appExceptionWithRollback();

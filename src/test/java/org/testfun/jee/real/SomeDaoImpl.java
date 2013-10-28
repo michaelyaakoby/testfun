@@ -7,13 +7,13 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
-public class ProviderDaoImpl implements ProviderDao {
+public class SomeDaoImpl implements SomeDao {
 
     @PersistenceContext(unitName = "noc")
     private EntityManager entityManager;
 
     @Override
-    public Provider save(Provider t) {
+    public SomeEntity save(SomeEntity t) {
         if (t.getId() == 0) {
             entityManager.persist(t);
         } else {
@@ -24,7 +24,7 @@ public class ProviderDaoImpl implements ProviderDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Provider> getAll() {
+    public List<SomeEntity> getAll() {
         Query query = entityManager.createQuery("FROM Provider AS be");
         return query.getResultList();
     }
