@@ -119,8 +119,18 @@ public class GettingStartedTest {
 ```
 **Note** that by mocking the `private SomeDao dao` member variable, any EJB asking for `SomeDao` to be injected will recieve the same mock. 
 
+### Testing EJBs which are using JPA and JDBC
+#### Using Mockito mocks
+#### Constraint validations
+### Testing JAX-RS resources
+#### Using Mockito mocks
+#### Issuing JSON requests
+#### Asserting JSON responses
+#### Expecting failure responses
+
 Special thanks to...
 --------------------
 * [Project Lombok](http://projectlombok.org) for eliminating so much boiler plate code.
 * [Mockito](http://code.google.com/p/mockito/) for its super cool mocking framework.
-* [Junit](http://junit.org/)
+* [Junit](http://junit.org/) for setting the goal.
+* [RESTEasy](http://www.jboss.org/resteasy) for its sleek JAX-RS implementation and powerfull testing infrastructure.
