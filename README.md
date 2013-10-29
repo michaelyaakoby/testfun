@@ -49,7 +49,6 @@ This file defines the JDBC driver to be used as well as the "classes" folder con
     </persistence-unit>
 
 </persistence>
-
 ```
 This will configure a MySQL driver to be used by JPA or JDBC as well as the path where Hibernate will be looking for entity classes.
 **Note** that this example uses the `hbm2ddl.auto=create` settings, however it is possible (and much faster) to create the schema during Maven build - TestFun-JEE will always rollback all changes to DB done during the tests (except for "implicit commits" caused by DDL commands).
@@ -121,16 +120,10 @@ public class GettingStartedTest {
 
 ### Testing EJBs which are using JPA and JDBC
 As demonstrated above, all that is needed for testing an EJB (stateless/singleton/etc session-bean) which may be using JPA, JDBC and other EJBs is:
-1. Tell JUnit to run your test using `EjbWithMockitoRunner`:
- ```java
- @RunWith(EjbWithMockitoRunner.class)
- public class GettingStartedTest {
- ```
-2. Define a member with the EJB's interface and annotate it with `@EJB`:
- ```java
-     @EJB
-     private Facade facade;
- ```
+
+1. Replace the JUnit test runner by annotating the test class with `RunWith(EjbWithMockitoRunner.class)`.
+2. Define a member variable using the interface of the EJB to be tested. Annotate this member with `@EJB`.
+
 #### Using Mockito mocks
 #### Constraint validations
 ### Testing JAX-RS resources
