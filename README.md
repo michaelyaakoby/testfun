@@ -1,5 +1,5 @@
-Project TestFun - JEE JUnit Testing Is Fun
-==========================================
+Project TestFun - JEE JUnit Testing Is Fun (no server is needed!)
+================================================================
 Project TestFun's goal is to eliminate the common excuse for lack of good unit tests: "testing was too complicated".
 
 TestFun-JEE is mixing existing libraries with our own goodies to deliver a robust but simple JEE junit experience when testing your DAOs (JPA), SLSBs, REST servers (JAX-RS) and more. 
@@ -120,6 +120,17 @@ public class GettingStartedTest {
 **Note** that by mocking the `private SomeDao dao` member variable, any EJB asking for `SomeDao` to be injected will recieve the same mock. 
 
 ### Testing EJBs which are using JPA and JDBC
+As demonstrated above, all that is needed for testing an EJB (stateless/singleton/etc session-bean) which may be using JPA, JDBC and other EJBs is:
+1. Tell JUnit to run your test using `EjbWithMockitoRunner`:
+ ```java
+ @RunWith(EjbWithMockitoRunner.class)
+ public class GettingStartedTest {
+ ```
+2. Define a member with the EJB's interface and annotate it with `@EJB`:
+ ```java
+     @EJB
+     private Facade facade;
+ ```
 #### Using Mockito mocks
 #### Constraint validations
 ### Testing JAX-RS resources
