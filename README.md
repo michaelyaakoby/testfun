@@ -127,6 +127,68 @@ As demonstrated above, all that is needed for testing an EJB (stateless/singleto
 2. Define a member variable using the interface of the EJB to be tested. Annotate this member with `@EJB`.
 3. Mocking of dependencies of the EJB being tested is done by adding member variables to the tests whit the dependency's interface which are annotated with `@Mock`. Any reference in the test and in other EJBs to the mocked EJB will point to the mock object.
 
+The following example demonstrates how to test your DAO without the hassle of configuring a JPA `EntityManager` - this example is inserting rows to the DB using an EJB which is uses JPA. The changes are rolled back after each test and the table needs to be created in advance or using the `hibernate.hbm2ddl.auto=true` configuration:
+```java
+@Local
+public interface SomeDao {
+    SomeEntity save(SomeEntity t);
+    List<SomeEntity> getAll();
+}
+```
+```java
+@Stateless
+public class SomeDaoImpl implements SomeDao {
+
+    @PersistenceContext(unitName = "TestFun")
+    private EntityManager entityManager;
+
+    @Override
+    public SomeEntity save(SomeEntity t) {
+        if (t.getId() == 0) {
+            entityManager.persist(t);
+        } else {
+            entityManager.merge(t);
+        }
+        return t;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<SomeEntity> getAll() {
+        Query query = entityManager.createQuery("FROM SomeEntity AS be");
+        return query.getResultList();
+    }
+
+}
+```
+```java
+@RunWith(EjbWithMockitoRunner.class)
+public class DaoTest {
+
+    @EJB
+    private SomeDao dao;
+
+    @Test
+    public void saveOne() {
+        dao.save(new SomeEntity(0, "1. one", "s"));
+        List<SomeEntity> entities = dao.getAll();
+        assertEquals(1, entities.size());
+    }
+
+    @Test
+    public void getMany() {
+        dao.save(new SomeEntity(0, "1. one", "s"));
+        dao.save(new SomeEntity(0, "2. two", "r"));
+        List<SomeEntity> entities = dao.getAll();
+        assertEquals(2, entities.size());
+        assertThat(entities).
+                onProperty("name").
+                isEqualTo(Arrays.asList("1. one", "2. two"));//Note, this using org.fest.assertions.Assertions.assertThat
+    }
+
+}
+```
+
 ### Bean validation
 To those lucky enough to use [Bean Validation](http://docs.oracle.com/javaee/6/tutorial/doc/gircz.html), TestFun-JEE allows you to easily assert these validations are working (after all, if such annotation is accidentally deleted, the compiler will not complain).
 
