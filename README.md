@@ -161,6 +161,52 @@ public class JpaValidationTest {
 }
 ```
 
+### Mocking SessionContext
+If your EJBs are using the `SessionContext`, with TestFun-JEE mocking the context becomes very easy:
+```java
+@Local
+public interface UserEjb {
+    String getCurrentUser();
+}
+```
+```java
+@Stateless
+public class UserEjbImpl implements UserEjb{
+
+    @Resource
+    private SessionContext sessionContext;
+
+    @Override
+    public String getCurrentUser() {
+        return sessionContext.getCallerPrincipal().getName();
+    }
+}
+```
+```java
+@RunWith(EjbWithMockitoRunner.class)
+public class MockSessionContextTest {
+
+    @Mock
+    private SessionContext sessionContext;
+
+    @EJB
+    private UserEjb userEjb;
+
+    @Test
+    public void testSessionContextMock() {
+        when(sessionContext.getCallerPrincipal()).thenReturn(new Principal() {
+            @Override
+            public String getName() {
+                return "kuki";
+            }
+        });
+
+        assertEquals("kuki", userEjb.getCurrentUser());
+    }
+
+}
+```
+
 ### Testing JAX-RS resources
 #### Using Mockito mocks
 #### Issuing JSON requests
