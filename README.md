@@ -65,7 +65,7 @@ public class SomeEntity {
     private int id;
 
     @Length.List({
-            @Length(min = 4, message = "The name must be at least 4 character"),
+            @Length(min = 4, message = "The name must be at least 4 characters"),
             @Length(max = 20, message = "The name must be less than 20 characters")
     })
     private String name;
@@ -211,7 +211,7 @@ public class JpaValidationTest {
 
     @Test
     public void nameTooShort() {
-        violationThrown.expectViolation("The name must be at least 4 character");
+        violationThrown.expectViolation("The name must be at least 4 characters");
         someDao.save(new SomeEntity(0, "srt", null));
     }
 
