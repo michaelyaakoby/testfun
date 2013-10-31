@@ -270,14 +270,130 @@ public class MockSessionContextTest {
 ```
 
 ### Testing JAX-RS resources
-#### Using Mockito mocks
-#### Issuing JSON requests
-#### Asserting JSON responses
-#### Expecting failure responses
+TestFun-JEE leverages RESTeasy's testing framework to enable very simple container-less tests.
+Your resource classes are loaded into a very lightweight JAX-RS server (based on TJWS and RESTeasy) which is running in the same JVM as the test itself.
+
+The server is configured and accessed using the JaxRsServer junit rule which is initialized with a list of resource classes to be scanned and deployed.
+
+Dependencies injected into the resource class will be mocked if a member variable be added to the test which is annotated with `@Mock`.
+
+Note how simple REST requests are being built and how esay the results are asserted.
+```java
+@RunWith(EjbWithMockitoRunner.class)
+public class JaxRsExampleTest {
+
+    @Mock
+    private SomeDao someDao;
+
+    @Rule
+    public JaxRsServer jaxRsServer = JaxRsServer.forResources(ExampleResource.class);
+
+    @Test
+    public void get() throws Exception {
+        JSONAssert.assertEquals(
+                "{\"restData\":{\"key\":1,\"data\":\"Got 1\"}}",
+                jaxRsServer.jsonRequest("/example/data/1").get(),
+                JSONCompareMode.LENIENT
+        );
+    }
+
+    @Test
+    public void notFound() {
+        assertEquals(
+                "Data with ID 0 wasn't found",
+                jaxRsServer.jsonRequest("/example/data/0").expectStatus(Response.Status.NOT_FOUND).get()
+        );
+    }
+
+    @Test
+    public void getAll() {
+        with(jaxRsServer.jsonRequest("/example/data").queryParam("min", 2).queryParam("max", 6).get())
+                .assertThat("$[*].restData.key", contains(2, 3, 4, 5));
+    }
+
+    @Test
+    public void create() {
+        jaxRsServer
+                .jsonRequest("/example/data")
+                .body(new RestData(12, "data..."))
+                .expectStatus(Response.Status.CREATED)
+                .expectLocation("/example/data/12")
+                .post();
+    }
+
+    @Test
+    public void withMock() {
+        when(someDao.getAll()).thenReturn(Arrays.<SomeEntity>asList(new SomeEntity(0, "n1", "a1"), new SomeEntity(0, "n2", "a2")));
+
+        assertEquals("n1", jaxRsServer.jsonRequest("/example/use_ejb").header("index", 0).get());
+        assertEquals("n2", jaxRsServer.jsonRequest("/example/use_ejb").header("index", 1).get());
+    }
+}
+```
+```java
+@Path("/example")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class ExampleResource {
+
+    @EJB
+    private SomeDao someDao;
+
+    @GET
+    @Path("/data/{id}")
+    public Response get(@PathParam("id") int id) {
+        if (id <= 0) return Response.status(Response.Status.NOT_FOUND).entity("Data with ID " + id + " wasn't found").build();
+        else return Response.ok(new RestData(id, "Got " + id)).build();
+    }
+
+    @GET
+    @Path("/data")
+    public List<RestData> getAll(@QueryParam("min") Integer minParam, @QueryParam("max") Integer maxParam) {
+        int min = minParam == null ? 0 : minParam;
+        int max = maxParam == null ? 10 : maxParam;
+
+        List<RestData> data = new LinkedList<>();
+        for (int i = min; i < max; ++i) {
+            data.add(new RestData(i, "Got " + i));
+        }
+
+        return data;
+    }
+
+    @POST
+    @Path("/data")
+    public Response create(RestData data) {
+        return Response.created(UriBuilder.fromPath("/example/data/").path(String.valueOf(data.getKey())).build()).build();
+    }
+
+    @GET
+    @Path("/use_ejb")
+    public String getEntityName(@HeaderParam("index") int index) {
+        return someDao.getAll().get(index).getName();
+    }
+
+}
+```
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
+public class RestData {
+
+    private int key;
+
+    @NotNull
+    private String data;
+
+}
+```
 
 Special thanks to...
 --------------------
 * [Project Lombok](http://projectlombok.org) for eliminating so much boiler plate code.
 * [Mockito](http://code.google.com/p/mockito/) for its super cool mocking framework.
 * [Junit](http://junit.org/) for setting the goal.
-* [RESTEasy](http://www.jboss.org/resteasy) for its sleek JAX-RS implementation and powerful testing infrastructure.
+* [RESTEasy](http://www.jboss.org/resteasy) for its sleek JAX-RS implementation and powerful testing infrastructure (based on TJWS).
+* [JsonPath](http://code.google.com/p/json-path/) and [JSONassert](http://jsonassert.skyscreamer.org/) for the awesome JSON parsing and asserting tools.
