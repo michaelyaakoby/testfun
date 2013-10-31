@@ -29,7 +29,7 @@ public class JpaValidationTest {
 
     @Test
     public void nameTooShort() {
-        violationThrown.expectViolation("The name must be at least 4 character");
+        violationThrown.expectViolation("The name must be at least 4 characters");
         someDao.save(new SomeEntity(0, "srt", null));
     }
 
