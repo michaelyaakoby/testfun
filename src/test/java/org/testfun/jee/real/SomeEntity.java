@@ -16,7 +16,7 @@ public class SomeEntity {
     private int id;
 
     @Length.List({
-            @Length(min = 4, message = "The name must be at least 4 character"),
+            @Length(min = 4, message = "The name must be at least 4 characters"),
             @Length(max = 20, message = "The name must be less than 20 characters")
     })
     private String name;
