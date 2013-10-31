@@ -1,5 +1,8 @@
 package org.testfun.jee.examples;
 
+import org.testfun.jee.real.SomeDao;
+
+import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -11,6 +14,9 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ExampleResource {
+
+    @EJB
+    private SomeDao someDao;
 
     @GET
     @Path("/data/{id}")
@@ -37,6 +43,12 @@ public class ExampleResource {
     @Path("/data")
     public Response create(RestData data) {
         return Response.created(UriBuilder.fromPath("/example/data/").path(String.valueOf(data.getKey())).build()).build();
+    }
+
+    @GET
+    @Path("/use_ejb")
+    public String getEntityName(@HeaderParam("index") int index) {
+        return someDao.getAll().get(index).getName();
     }
 
 }
