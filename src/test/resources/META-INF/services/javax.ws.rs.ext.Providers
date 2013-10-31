@@ -1,2 +1,0 @@
-# The following list of providers is needed to enable validation during unit tests.
-# When deployed in a WAR, teh container reads the @Provider annotations properly.
