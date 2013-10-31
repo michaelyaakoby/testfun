@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import static com.jayway.jsonassert.JsonAssert.with;
 import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(EjbWithMockitoRunner.class)
 public class JaxRsExampleTest {
@@ -34,7 +35,10 @@ public class JaxRsExampleTest {
 
     @Test
     public void notFound() throws Exception {
-        jaxRsServer.jsonRequest("/example/data/0").expectStatus(Response.Status.NOT_FOUND).get();
+        assertEquals(
+                "Data with ID 0 wasn't found",
+                jaxRsServer.jsonRequest("/example/data/0").expectStatus(Response.Status.NOT_FOUND).get()
+        );
     }
 
     @Test
@@ -43,4 +47,13 @@ public class JaxRsExampleTest {
                 .assertThat("$[*].restData.key", contains(2, 3, 4, 5));
     }
 
+    @Test
+    public void create() throws Exception {
+        jaxRsServer
+                .jsonRequest("/example/data")
+                .body(new RestData(12, "data..."))
+                .expectStatus(Response.Status.CREATED)
+                .expectLocation("/example/data/12")
+                .post();
+    }
 }

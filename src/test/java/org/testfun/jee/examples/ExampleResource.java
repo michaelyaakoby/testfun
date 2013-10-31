@@ -3,6 +3,7 @@ package org.testfun.jee.examples;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ExampleResource {
     @GET
     @Path("/data/{id}")
     public Response get(@PathParam("id") int id) {
-        if (id <= 0) return Response.status(Response.Status.NOT_FOUND).build();
+        if (id <= 0) return Response.status(Response.Status.NOT_FOUND).entity("Data with ID " + id + " wasn't found").build();
         else return Response.ok(new RestData(id, "Got " + id)).build();
     }
 
@@ -30,6 +31,12 @@ public class ExampleResource {
         }
 
         return data;
+    }
+
+    @POST
+    @Path("/data")
+    public Response create(RestData data) {
+        return Response.created(UriBuilder.fromPath("/example/data/").path(String.valueOf(data.getKey())).build()).build();
     }
 
 }
