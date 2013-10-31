@@ -2,11 +2,12 @@ package org.testfun.jee;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
-@Data
+@Data @NoArgsConstructor
 @Table(uniqueConstraints=
     @UniqueConstraint(columnNames={"NAME"})
 )
