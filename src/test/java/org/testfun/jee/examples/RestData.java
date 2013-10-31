@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class RestData {
 
-    @Min(1)
     private int key;
 
     @NotNull
