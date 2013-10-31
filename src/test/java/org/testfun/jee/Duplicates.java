@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Data
-@Table(catalog = "runner_test")
+@Table(uniqueConstraints=
+    @UniqueConstraint(columnNames={"NAME"})
+)
 @EqualsAndHashCode(callSuper = false)
 @Entity
 public class Duplicates {

@@ -2,13 +2,12 @@ package org.testfun.jee.real;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
 @Data @AllArgsConstructor
-@Table(catalog = "tmp", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Entity
 public class SomeEntity {
 

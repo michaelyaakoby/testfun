@@ -8,18 +8,11 @@
         <jar-file>target/classes</jar-file>
 
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306?user=root&amp;password=ugauga"/>
+            <property name="hibernate.connection.url" value="jdbc:hsqldb:file:target/hsql/db"/>
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <!--
-                to support @GeneratedValue(AUTO)
-                see the following for more info:
-                https://docs.jboss.org/author/display/AS71/JPA+Reference+Guide#JPAReferenceGuide-Persistenceunitproperties
-                https://community.jboss.org/thread/170623?start=0&tstart=0
-            -->
-            <property name="hibernate.id.new_generator_mappings" value="false"/>
         </properties>
     </persistence-unit>
 

@@ -113,7 +113,7 @@ public class EjbWithMockitoRunnerSelfTest {
         int newId;
         try(Connection connection = dataSource.getConnection()){
             try(Statement statement = connection.createStatement()) {
-                try(ResultSet results = statement.executeQuery("SELECT id FROM tmp.some_entity WHERE name='name'")) {
+                try(ResultSet results = statement.executeQuery("SELECT id FROM some_entity WHERE name='name'")) {
                     results.next();
                     newId = results.getInt(1);
                 }
