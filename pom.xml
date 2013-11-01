@@ -11,8 +11,10 @@
     <packaging>jar</packaging>
 
     <name>JEE JUnit Testing Is Fun</name>
-    <description>A lightweight JUnit Runner that allows testing JEE code such JPA, SLSB and JAX-RS without requiring full blown container and with Mockito mocks enabled.</description>
-    <url>http://maven.apache.org</url>
+    <description>A lightweight JUnit Runner that allows testing JEE code such JPA, SLSB and JAX-RS without requiring
+        full blown container and with Mockito mocks enabled.
+    </description>
+    <url>https://github.com/michaelyaakoby/testfun</url>
 
     <licenses>
         <license>
@@ -23,7 +25,7 @@
     </licenses>
 
     <scm>
-        <url>http://svn.apache.org/viewcvs.cgi/maven</url>
+        <url>https://github.com/michaelyaakoby/testfun.git</url>
     </scm>
 
     <dependencies>
@@ -192,5 +194,42 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
