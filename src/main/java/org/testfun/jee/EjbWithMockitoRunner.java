@@ -15,6 +15,12 @@ import org.testfun.jee.runner.inject.TransactionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * A JUnit runner that allows injection of JEE EJBs as well as Mockito mock objects directly into the test instance.
+ * <p>
+ * To use this runner, simply annotate the test class with
+ * <pre>{@code @RunWith(EjbWithMockitoRunner.class) }</pre>
+ */
 public class EjbWithMockitoRunner extends Runner implements Filterable {
 
     private BlockJUnit4ClassRunner runner;

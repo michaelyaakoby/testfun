@@ -13,6 +13,17 @@ import java.util.List;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+/**
+ * A JUnit rule that is used for declaring on expected REST/HTTP-client response returned from the server - should be
+ * used in conjunction with the {@link JaxRsServer} rule.
+ * <p>
+ * To use this rule, add the following member variable to your test class:
+ * <pre>{@code @Rule public ExpectedClientResponseFailure thrownClientResponseFailure = ExpectedClientResponseFailure.none();}</pre>
+ * <p>
+ * Setting failure expectation can be done as follows:
+ * <pre>{@code thrownClientResponseFailure.expectFailureResponse(Response.Status.BAD_REQUEST, "Password was not provided");}</pre>
+ * Note that it is recommended to use {@link JaxRsServer#expectFailureResponse(javax.ws.rs.core.Response.Status, java.lang.String)} instead:
+ */
 public class ExpectedClientResponseFailure implements MethodRule {
 
     private String expectedMessageSubstring;
