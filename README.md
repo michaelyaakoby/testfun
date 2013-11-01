@@ -24,7 +24,7 @@ Using TestFun-JEE requires adding the following dependency to your POM:
     <scope>test</scope>
 </dependency>
 ```
-*TODO: The project isn't yet loaded into the central repository - please fork, build and install into your local .m2.*
+*Project is distributed via https://oss.sonatype.org/content/groups/public/org/testfun/jee/0.8/*
 #### Configuring JPA
 JPA support is configured via the `src/test/resources/META-INF/persistence.xml`. 
 This file defines the JDBC driver to be used as well as the "classes" folder containing the entities.
