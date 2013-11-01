@@ -397,3 +397,7 @@ Special thanks to...
 * [Junit](http://junit.org/) for setting the goal.
 * [RESTEasy](http://www.jboss.org/resteasy) for its sleek JAX-RS implementation and powerful testing infrastructure (based on TJWS).
 * [JsonPath](http://code.google.com/p/json-path/) and [JSONassert](http://jsonassert.skyscreamer.org/) for the awesome JSON parsing and asserting tools.
+
+Advanced settings
+-----------------
+* By default, when testfun-JEE is scanning the classpath looking for EJBs, it'll skip JARS. Set the `org.testfun.jee.enable_jar_scanning` system property in order to force JAR scanning.

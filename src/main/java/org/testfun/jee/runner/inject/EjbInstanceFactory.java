@@ -6,7 +6,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class EjbInstanceFactory {
 
@@ -15,8 +14,6 @@ public class EjbInstanceFactory {
     public static EjbInstanceFactory getInstance() {
         return INSTANCE;
     }
-
-    public static final Pattern CLASS_NAME_PATTERN = Pattern.compile("org/testfun/[^$]+\\.class"); //TODO this needs to be externalized to a config file
 
     private Map<Class, Class> ejbClassByImplementedInterface;
 
@@ -40,7 +37,7 @@ public class EjbInstanceFactory {
         if (ejbClassByImplementedInterface == null) {
             ejbClassByImplementedInterface = new HashMap<>();
 
-            ClassPathScanner classPathScanner = new ClassPathScanner(CLASS_NAME_PATTERN);
+            ClassPathScanner classPathScanner = new ClassPathScanner();
             classPathScanner.scan(new ClassPathScanner.Handler() {
                 @Override
                 public void classFound(Class<?> aClass) {

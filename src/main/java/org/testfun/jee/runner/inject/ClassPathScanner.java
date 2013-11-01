@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -19,24 +18,20 @@ public class ClassPathScanner {
 
     private static final Logger LOGGER = Logger.getLogger(ClassPathScanner.class);
 
-    private Pattern pattern;
-
-    public ClassPathScanner(Pattern pattern) {
-        this.pattern = pattern;
-    }
-
     public List<String> getResourcesInClassPath() {
+        boolean jarScanningEnabled = Boolean.getBoolean("org.testfun.jee.enable_jar_scanning");
+
         List<String> resourceNames = new LinkedList<>();
 
         String[] classPathRoots = System.getProperty("java.class.path", ".").split(";");
         for (String root : classPathRoots) {
             File rootFile = new File(root);
+            if (rootFile.isDirectory())
             if (rootFile.exists()) {
                 if (rootFile.isDirectory()) {
-                    findResourcesFromDirectory(resourceNames, rootFile.getAbsolutePath().length() + 1, rootFile, pattern);
-
-                } else {
-                    findResourcesFromJarFile(resourceNames, rootFile, pattern);
+                    findResourcesFromDirectory(resourceNames, rootFile.getAbsolutePath().length() + 1, rootFile);
+                } else if (jarScanningEnabled) {
+                    findResourcesFromJarFile(resourceNames, rootFile);
                 }
             }
         }
@@ -69,7 +64,7 @@ public class ClassPathScanner {
         public void classFound(Class<?> aClass);
     }
 
-    private void findResourcesFromJarFile(List<String> resourceNames, File jarFile, Pattern pattern) {
+    private void findResourcesFromJarFile(List<String> resourceNames, File jarFile) {
         ZipFile zipFile = null;
         try {
             zipFile = new ZipFile(jarFile);
@@ -78,10 +73,7 @@ public class ClassPathScanner {
             while (zipFileEntries.hasMoreElements()) {
 
                 String fileName = zipFileEntries.nextElement().getName();
-
-                if (pattern.matcher(fileName).matches()) {
-                    resourceNames.add(fileName);
-                }
+                resourceNames.add(fileName);
             }
 
         } catch (Exception e) {
@@ -98,20 +90,17 @@ public class ClassPathScanner {
         }
     }
 
-    private void findResourcesFromDirectory(List<String> resourceNames, int rootLength, File directory, Pattern pattern) {
+    private void findResourcesFromDirectory(List<String> resourceNames, int rootLength, File directory) {
         File[] fileList = directory.listFiles();
         if (fileList != null) {
             for (File file : fileList) {
 
                 if (file.isDirectory()) {
-                    findResourcesFromDirectory(resourceNames, rootLength, file, pattern);
+                    findResourcesFromDirectory(resourceNames, rootLength, file);
 
                 } else {
                     String fileName = file.getAbsolutePath().substring(rootLength).replace('\\', '/');
-
-                    if (pattern.matcher(fileName).matches()) {
-                        resourceNames.add(fileName);
-                    }
+                    resourceNames.add(fileName);
                 }
             }
         }
