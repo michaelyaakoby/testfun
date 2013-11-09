@@ -20,7 +20,7 @@ Using TestFun-JEE requires adding the following dependency to your POM:
 <dependency>
     <groupId>org.testfun</groupId>
     <artifactId>jee</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
     <scope>test</scope>
 </dependency>
 ```
