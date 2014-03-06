@@ -11,8 +11,7 @@ import javax.ejb.EJB;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(EjbWithMockitoRunner.class)

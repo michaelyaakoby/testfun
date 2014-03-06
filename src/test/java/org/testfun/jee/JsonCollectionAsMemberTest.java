@@ -13,7 +13,7 @@ public class JsonCollectionAsMemberTest {
     @Rule
     public JaxRsServer jaxRsServer = JaxRsServer.forResources(TestResource.class);
 
-    @Test @Ignore //TODO should be fixed part of NOC-173
+    @Test @Ignore
     public void emptyList() throws JSONException {
         JSONAssert.assertEquals(
                 "{\"objectWithCollectionAsMember\":{\"collection\":[]}}",
@@ -22,7 +22,7 @@ public class JsonCollectionAsMemberTest {
         );
     }
 
-    @Test @Ignore //TODO should be fixed part of NOC-173
+    @Test @Ignore
     public void listOfSizeOne() throws JSONException {
         JSONAssert.assertEquals(
                 "{\"objectWithCollectionAsMember\":{\"collection\":[{\"str\":0,\"num\":0}]}}",

@@ -1,17 +1,15 @@
 package org.testfun.jee;
 
-import org.jboss.resteasy.client.ClientResponse;
-import org.jboss.resteasy.client.ClientResponseFailure;
 import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * A JUnit rule that is used for declaring on expected REST/HTTP-client response returned from the server - should be
@@ -91,15 +89,15 @@ public class ExpectedClientResponseFailure implements MethodRule {
                     throw e; // unexpected exception
                 }
 
-                Throwable causedByClientResponseFailure = getEncapsulatedException(e, ClientResponseFailure.class);
+                Throwable causedByClientResponseFailure = getEncapsulatedException(e, ClientErrorException.class);
                 if (causedByClientResponseFailure == null) {
                     throw e; // the caught exception isn't caused by the expected one
                 }
 
                 // if there's a failure was expected and the caught, make sure the expected message matches the caught one
-                ClientResponseFailure failure = (ClientResponseFailure) causedByClientResponseFailure;
-                ClientResponse response = failure.getResponse();
-                String actualResponseMessage = response.getEntity(String.class).toString();
+                ClientErrorException failure = (ClientErrorException) causedByClientResponseFailure;
+                Response response = failure.getResponse();
+                String actualResponseMessage = response.readEntity(String.class);
 
                 Response.Status responseStatus = Response.Status.fromStatusCode(response.getStatus());
                 boolean actualFailureMatchesExpectedOne = actualResponseMessage.contains(expectedMessageSubstring) && responseStatus == expectedResponseStatus;

@@ -36,5 +36,4 @@ public class DaoTest {
                 onProperty("name").
                 isEqualTo(Arrays.asList("1. one", "2. two"));//Note, this using org.fest.assertions.Assertions.assertThat
     }
-
 }

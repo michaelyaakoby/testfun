@@ -1,12 +1,12 @@
 package org.testfun.jee;
 
-import org.jboss.resteasy.client.ClientResponseFailure;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 
 public class JaxRsServerTest {
@@ -15,7 +15,7 @@ public class JaxRsServerTest {
     public JaxRsServer jaxRsServer = JaxRsServer.forResources(TestResource.class);
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
 
     @Test
     public void putWithHeaders() throws Exception {
@@ -120,8 +120,8 @@ public class JaxRsServerTest {
 
     @Test
     public void unexpectedFailure() {
-        thrown.expect(ClientResponseFailure.class);
-        thrown.expectMessage("Failed with status: 404");
+        thrown.expect(ClientErrorException.class);
+        thrown.expectMessage("HTTP 404 Not Found");
 
         jaxRsServer.jsonRequest("/rest/test/unknown").get();
     }

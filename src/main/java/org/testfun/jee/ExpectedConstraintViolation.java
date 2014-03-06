@@ -1,19 +1,14 @@
 package org.testfun.jee;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.StringDescription;
+import org.hamcrest.*;
+import org.hamcrest.core.CombinableMatcher;
 import org.junit.Assert;
-import org.junit.internal.matchers.TypeSafeMatcher;
 import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.mockito.ArgumentMatcher;
-
 import javax.validation.ConstraintViolationException;
-
-import static org.junit.matchers.JUnitMatchers.*;
 
 public class ExpectedConstraintViolation implements MethodRule {
 
@@ -42,7 +37,7 @@ public class ExpectedConstraintViolation implements MethodRule {
         if (this.matcher == null) {
             this.matcher = (Matcher<Object>) matcher;
         } else {
-            this.matcher = both(this.matcher).and(matcher);
+            this.matcher = CombinableMatcher.both(this.matcher).and((Matcher<Object>) matcher);
         }
     }
 
@@ -52,10 +47,10 @@ public class ExpectedConstraintViolation implements MethodRule {
      */
     public void expectViolation(String substring) {
         if (matcher == null) {
-            expect(either(new CausedBy(org.hibernate.exception.ConstraintViolationException.class)).or(new CausedBy(ConstraintViolationException.class)));
+            expect(CombinableMatcher.either(new CausedBy(org.hibernate.exception.ConstraintViolationException.class)).or(new CausedBy(ConstraintViolationException.class)));
         }
 
-        expectMessage(containsString(substring));
+        expectMessage(CoreMatchers.containsString(substring));
     }
 
     /**

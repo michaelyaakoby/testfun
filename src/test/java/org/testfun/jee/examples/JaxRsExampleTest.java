@@ -48,8 +48,8 @@ public class JaxRsExampleTest {
 
     @Test
     public void getAll() {
-        with(jaxRsServer.jsonRequest("/example/data").queryParam("min", 2).queryParam("max", 6).get())
-                .assertThat("$[*].restData.key", contains(2, 3, 4, 5));
+        String json = jaxRsServer.jsonRequest("/example/data").queryParam("min", 2).queryParam("max", 6).get();
+        with(json).assertThat("$[*].restData.key", contains(2, 3, 4, 5));
     }
 
     @Test

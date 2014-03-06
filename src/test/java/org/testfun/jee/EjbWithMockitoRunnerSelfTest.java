@@ -56,7 +56,7 @@ public class EjbWithMockitoRunnerSelfTest {
     private DataSource dataSource;
 
     @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
+    public ExpectedException exceptionRule = ExpectedException.none().handleAssertionErrors();
 
     @Rule
     public ExpectedConstraintViolation violationThrown = ExpectedConstraintViolation.none();

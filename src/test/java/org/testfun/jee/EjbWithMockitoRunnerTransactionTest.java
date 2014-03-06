@@ -17,11 +17,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import static junit.framework.Assert.assertNull;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 @RunWith(EjbWithMockitoRunner.class)
 public class EjbWithMockitoRunnerTransactionTest {

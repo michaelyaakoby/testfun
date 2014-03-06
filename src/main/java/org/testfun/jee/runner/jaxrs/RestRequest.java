@@ -1,21 +1,21 @@
 package org.testfun.jee.runner.jaxrs;
 
 
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-import org.jboss.resteasy.client.ClientResponseFailure;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.*;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 public class RestRequest {
 
-    private ClientRequest request;
+    private WebTarget webTarget;
 
     private MediaType contentType = MediaType.APPLICATION_XML_TYPE;
+    private MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
+    private Object body;
 
     private Response.Status expectedStatus;
 
@@ -23,27 +23,26 @@ public class RestRequest {
 
     public RestRequest(String uri, int port) {
         UriBuilder path = UriBuilder.fromUri("http://localhost").port(port).path(uri);
-        request = new ClientRequest(path.build().toString());
+        webTarget = ClientBuilder.newBuilder().build().target(path.build());
     }
 
     public RestRequest accept(MediaType acceptMediaType) {
-        request.accept(acceptMediaType);
         contentType = acceptMediaType;
         return this;
     }
 
     public RestRequest header(String key, Object value) {
-        request.header(key, value);
+        headers.add(key, value);
         return this;
     }
 
     public RestRequest body(Object body) {
-        request.body(contentType, body);
+        this.body = body;
         return this;
     }
 
     public RestRequest queryParam(String param, Object value) {
-        request.queryParameter(param, value);
+        webTarget = webTarget.queryParam(param, value);
         return this;
     }
 
@@ -74,9 +73,13 @@ public class RestRequest {
     }
 
     private String doHttpMethod(String method) {
-        ClientResponse response;
+        Response response;
         try {
-            response = request.httpMethod(method);
+            if (body != null) {
+                response = webTarget.request().headers(headers).build(method, Entity.entity(body, contentType)).invoke();
+            } else {
+                response = webTarget.request().headers(headers).build(method).invoke();
+            }
         } catch (Exception e) {
             throw new JaxRsException(method + " failed", e);
         }
@@ -87,20 +90,20 @@ public class RestRequest {
     }
 
     @SuppressWarnings("unchecked")
-    private String toString(ClientResponse response) {
+    private String toString(Response response) {
         Response.Status responseStatus = Response.Status.fromStatusCode(response.getStatus());
 
         if (responseStatus == Response.Status.NO_CONTENT) {
             return null;
         }
         if (responseStatus.getFamily() != Response.Status.Family.SUCCESSFUL && responseStatus != expectedStatus) {
-            throw new ClientResponseFailure(response);
+            throw new ClientErrorException(response);
         } else {
-            return (String) response.getEntity(String.class);
+            return response.readEntity(String.class);
         }
     }
 
-    private void assertExpectedStatus(ClientResponse response) {
+    private void assertExpectedStatus(Response response) {
         if (expectedStatus != null) {
             Response.Status responseStatus = Response.Status.fromStatusCode(response.getStatus());
 
@@ -110,9 +113,9 @@ public class RestRequest {
         }
     }
 
-    private void assertLocation(ClientResponse response) {
+    private void assertLocation(Response response) {
         if (expectedLocationUri != null) {
-            String actualLocation = response.getLocation().getHref();
+            String actualLocation = response.getLocation().toString();
             assertThat(actualLocation).
                     as("Expected location '" + expectedLocationUri + "' but got " + actualLocation).
                     contains(expectedLocationUri);
