@@ -9,6 +9,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 public class JaxRsServerTest {
 
     @Rule
@@ -124,6 +127,24 @@ public class JaxRsServerTest {
         thrown.expectMessage("HTTP 404 Not Found");
 
         jaxRsServer.jsonRequest("/rest/test/unknown").get();
+    }
+
+    @Test
+    public void ports() {
+        JaxRsServer jaxRsServer2 = JaxRsServer.forResources(TestResource.class);
+        jaxRsServer2.startJaxRsServer();
+        int port1 = jaxRsServer.getPort();
+        int port2 = jaxRsServer2.getPort();
+        jaxRsServer2.shutdownJaxRsServer();
+
+        assertNotEquals("Two servers running at the same time should have different ports", port1, port2);
+
+        jaxRsServer2 = JaxRsServer.forResources(TestResource.class).port(34567);
+        jaxRsServer2.startJaxRsServer();
+        port2 = jaxRsServer2.getPort();
+        jaxRsServer2.shutdownJaxRsServer();
+
+        assertEquals("Manually set port should match the current port", 34567, port2);
     }
 
     private void expectJaxRsServerException() {

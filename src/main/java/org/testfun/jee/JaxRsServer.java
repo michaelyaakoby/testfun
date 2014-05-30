@@ -51,6 +51,14 @@ public class JaxRsServer implements MethodRule {
     }
 
     /**
+     * Gets the automatically-selected or manually-set TCP port used by the server.
+     * @return selected TCP port
+     */
+    public int getPort() {
+        return port;
+    }
+
+    /**
      * Constructs a new JSON REST request builder.
      * @param uri base request URI
      * @return REST request builder
@@ -73,7 +81,7 @@ public class JaxRsServer implements MethodRule {
         expectedClientResponseFailure.expectFailureResponse(expectedResponseStatus, expectedMessageSubstring);
     }
 
-    private void startJaxRsServer() {
+    public void startJaxRsServer() {
         jaxRsServer = new TJWSEmbeddedJaxrsServer();
         jaxRsServer.setPort(port);
 
@@ -99,7 +107,7 @@ public class JaxRsServer implements MethodRule {
         }
     }
 
-    private void shutdownJaxRsServer() {
+    public void shutdownJaxRsServer() {
         jaxRsServer.stop();
         jaxRsServer.getDeployment().stop();
     }
