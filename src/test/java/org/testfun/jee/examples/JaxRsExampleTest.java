@@ -32,7 +32,7 @@ public class JaxRsExampleTest {
     @Test
     public void get() throws Exception {
         JSONAssert.assertEquals(
-                "{\"restData\":{\"key\":1,\"data\":\"Got 1\"}}",
+                "{\"key\":1,\"data\":\"Got 1\"}",
                 jaxRsServer.jsonRequest("/example/data/1").get(),
                 JSONCompareMode.LENIENT
         );
@@ -49,7 +49,7 @@ public class JaxRsExampleTest {
     @Test
     public void getAll() {
         String json = jaxRsServer.jsonRequest("/example/data").queryParam("min", 2).queryParam("max", 6).get();
-        with(json).assertThat("$[*].restData.key", contains(2, 3, 4, 5));
+        with(json).assertThat("$[*].key", contains(2, 3, 4, 5));
     }
 
     @Test

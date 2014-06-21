@@ -1,6 +1,7 @@
 package org.testfun.jee;
 
 import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
+import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
@@ -25,6 +26,8 @@ public class JaxRsServer implements MethodRule {
 
     private Class[] resourceClasses;
 
+    private Class[] providerClasses;
+
     private ExpectedClientResponseFailure expectedClientResponseFailure  = ExpectedClientResponseFailure.none();
 
     /**
@@ -47,6 +50,14 @@ public class JaxRsServer implements MethodRule {
     public JaxRsServer port(int port) {
         JaxRsServer newServer = new JaxRsServer(resourceClasses);
         newServer.port = port;
+        newServer.providerClasses = this.providerClasses;
+        return newServer;
+    }
+
+    public JaxRsServer providers(Class... providerClasses) {
+        JaxRsServer newServer = new JaxRsServer(resourceClasses);
+        newServer.port = this.port;
+        newServer.providerClasses = providerClasses;
         return newServer;
     }
 
@@ -103,13 +114,23 @@ public class JaxRsServer implements MethodRule {
                 throw new IllegalArgumentException(e1);
             }
             DependencyInjector.getInstance().injectDependencies(resourceInstance);
-            jaxRsServer.getDeployment().getRegistry().addSingletonResource(resourceInstance);
+            getDeployment().getRegistry().addSingletonResource(resourceInstance);
+        }
+
+        if (providerClasses != null) {
+            for (Class providerClass: providerClasses) {
+                getDeployment().getProviderFactory().registerProvider(providerClass);
+            }
         }
     }
 
     public void shutdownJaxRsServer() {
         jaxRsServer.stop();
-        jaxRsServer.getDeployment().stop();
+        getDeployment().stop();
+    }
+
+    public ResteasyDeployment getDeployment() {
+        return jaxRsServer.getDeployment();
     }
 
     private class JaxRsServerStatement extends Statement {

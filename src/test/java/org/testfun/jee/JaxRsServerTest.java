@@ -23,7 +23,7 @@ public class JaxRsServerTest {
     @Test
     public void putWithHeaders() throws Exception {
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"a string\",\"num\":1234}}",
+                "{\"str\":\"a string\",\"num\":1234}",
                 jaxRsServer.jsonRequest("/rest/test/put").header("str", "a string").header("num", 1234).put(),
                 JSONCompareMode.LENIENT
         );
@@ -32,7 +32,7 @@ public class JaxRsServerTest {
     @Test
     public void postWithBody() throws Exception {
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"a string\",\"num\":1234}}",
+                "{\"str\":\"a string\",\"num\":1234}",
                 jaxRsServer.jsonRequest("/rest/test/post").body(new JaxRsTestObject("a string", 1234)).post(),
                 JSONCompareMode.LENIENT
         );
@@ -41,7 +41,7 @@ public class JaxRsServerTest {
     @Test
     public void postCreated() throws Exception {
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"diet\",\"num\":4}}",
+                "{\"str\":\"diet\",\"num\":4}",
                 jaxRsServer.jsonRequest("/rest/test/create").post(),
                 JSONCompareMode.LENIENT
         );
@@ -59,7 +59,7 @@ public class JaxRsServerTest {
     @Test
     public void getOk() throws Exception {
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"Here it is\",\"num\":3456}}",
+                "{\"str\":\"Here it is\",\"num\":3456}",
                 jaxRsServer.jsonRequest("/rest/test/known").get(),
                 JSONCompareMode.LENIENT
         );
@@ -68,7 +68,7 @@ public class JaxRsServerTest {
     @Test
     public void getWithParams() throws Exception {
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"Here it is\",\"num\":111}}",
+                "{\"str\":\"Here it is\",\"num\":111}",
                 jaxRsServer.jsonRequest("/rest/test/known").queryParam("num", 111).get(),
                 JSONCompareMode.LENIENT
         );

@@ -1,5 +1,6 @@
 package org.testfun.jee;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -8,13 +9,10 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.testfun.jee.runner.PersistenceXml;
 import org.testfun.jee.runner.SingletonDataSource;
-
+import static org.hamcrest.CoreMatchers.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import static org.hamcrest.core.IsNot.not;
@@ -69,10 +67,13 @@ public class EjbWithMockitoRunnerTransactionTest {
 
     @Test
     public void dbThrowDuplicateKey() {
-        thrown.expectMessage("integrity constraint violation: unique constraint or index violation");
+        entityManager.persist(new Duplicates("kuki"));
 
-        entityManager.persist(new Duplicates("kuki"));
-        entityManager.persist(new Duplicates("kuki"));
+        try {
+            entityManager.persist(new Duplicates("kuki"));
+        } catch (Throwable t) {
+            assertThat(ExceptionUtils.getRootCauseMessage(t), containsString("unique constraint or index violation"));
+        }
     }
 
     @Test

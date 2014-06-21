@@ -16,12 +16,12 @@ public class ConcurrentServersDifferentPortsTest {
     @Test
     public void makeSureTwoServersRunConcurrently() throws Exception {
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"Here it is\",\"num\":3456}}",
+                "{\"str\":\"Here it is\",\"num\":3456}",
                 server1.jsonRequest("/rest/test/known").get(),
                 JSONCompareMode.LENIENT
         );
         JSONAssert.assertEquals(
-                "{\"jaxRsTestObject\":{\"str\":\"Here it is\",\"num\":3456}}",
+                "{\"str\":\"Here it is\",\"num\":3456}",
                 server2.jsonRequest("/rest/test/known").get(),
                 JSONCompareMode.LENIENT
         );
