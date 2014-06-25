@@ -16,6 +16,14 @@ TestFun-JEE is mixing existing libraries with our own goodies to deliver a robus
 1. Replaced the hardcoded 9095 port the JaxRsServer used for binding with "0" which means "get the next available port" - this allows the usage of multiple JaxRsServer instances concurrently towards concurrent tests.
 2. Upgraded many libraries to latest version (its about time...).
 
+#### 2.11
+1. Enable finding the port the server that bound to.
+2. Upgraded dependencies.
+
+#### 2.12
+1. Upgraded dependencies.
+2. Enable registering @Provider classes.
+
 Usage
 -----
 ### Getting started
