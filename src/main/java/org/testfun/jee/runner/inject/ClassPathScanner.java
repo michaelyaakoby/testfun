@@ -23,8 +23,7 @@ public class ClassPathScanner {
 
         List<String> resourceNames = new LinkedList<>();
 
-        String[] classPathRoots = System.getProperty("java.class.path", ".").split("[;:]");
-        for (String root : classPathRoots) {
+        for (String root : getClasPathRoots()) {
             File rootFile = new File(root);
             if (rootFile.isDirectory())
             if (rootFile.exists()) {
@@ -37,6 +36,11 @@ public class ClassPathScanner {
         }
 
         return resourceNames;
+    }
+
+    String[] getClasPathRoots() {
+        String pathSeparator = System.getProperty("path.separator");
+        return System.getProperty("java.class.path", ".").split(pathSeparator);
     }
 
     public void scan(Handler handler) {
