@@ -5,7 +5,7 @@
 
     <groupId>org.testfun</groupId>
     <artifactId>jee</artifactId>
-    <version>0.13-SNAPSHOT</version>
+    <version>0.14</version>
     <packaging>jar</packaging>
 
     <parent>
