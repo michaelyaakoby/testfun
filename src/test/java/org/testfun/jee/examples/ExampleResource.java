@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,4 +52,11 @@ public class ExampleResource {
         return someDao.getAll().get(index).getName();
     }
 
+    @POST
+    @Path("/form")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response postParam(@FormParam("p1") String p1, @FormParam("p2") String p2)
+    {
+        return Response.status(Status.OK).entity(p1 + "-" + p2).build();
+    }
 }
