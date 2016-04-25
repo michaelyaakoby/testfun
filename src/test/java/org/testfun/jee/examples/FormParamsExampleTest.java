@@ -5,9 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.testfun.jee.EjbWithMockitoRunner;
 import org.testfun.jee.JaxRsServer;
-import org.testfun.jee.runner.jaxrs.RestRequest;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
 
@@ -19,9 +17,10 @@ public class FormParamsExampleTest {
 
     @Test
     public void postWithForm() throws Exception {
-        String response = new RestRequest("/example/form", jaxRsServer.getPort()).
-                accept(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
-                body("p1=ABCD&p2=12345").
+        String response = jaxRsServer.
+                formRequest("/example/form").
+                withFormParam("p1", "ABCD").
+                withFormParam("p2", "12345").
                 expectStatus(Response.Status.OK).
                 post();
 

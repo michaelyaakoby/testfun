@@ -78,6 +78,15 @@ public class JaxRsServer implements MethodRule {
         return new RestRequest(uri, port).accept(MediaType.APPLICATION_JSON_TYPE);
     }
 
+    /**
+     * Constructs a new FORM REST request (application/x-www-form-urlencoded) builder.
+     * @param uri base request URI
+     * @return REST request builder
+     */
+    public RestRequest formRequest(String uri) {
+        return new RestRequest(uri, port).accept(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
+    }
+
     @Override
     public Statement apply(Statement base, FrameworkMethod method, Object target) {
         return new JaxRsServerStatement(expectedClientResponseFailure.apply(base, method, target));

@@ -41,6 +41,12 @@ public class RestRequest {
         return this;
     }
 
+    public RestRequest withFormParam(String name, String value) {
+        String entry = name + "=" + value;
+        this.body = body == null ? entry : body.toString() + "&" + entry;
+        return this;
+    }
+
     public RestRequest queryParam(String param, Object value) {
         webTarget = webTarget.queryParam(param, value);
         return this;
