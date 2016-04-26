@@ -432,6 +432,26 @@ public void postWithForm() throws Exception {
 }
 ```
 
+#### Using SecurityContext
+Testfun also supports the usage of ```@Context SecurityContext sc``` in resource methods.
+To use it, your test-code must add basic-authentication to the HTTP request, which testfun's security-domain will always accept as valid credentials and make the SecurityContext return a ```Principal``` with the username specified in the request.
+For example, the following resource method retrieves the user's name from the ```SecurityContext``` and return it as the response:
+```java
+@GET
+@Path("/user_from_security_context")
+public String getUserFromSecurityContext(@Context SecurityContext sc) {
+    return sc.getUserPrincipal().getName();
+}
+```
+The test will authenticate as follows:
+```java
+String response = jaxRsServer.
+        jsonRequest("/example/user_from_security_context").
+        basicAuth("kuki", "puki").
+        expectStatus(Response.Status.OK).
+        get();
+```
+
 Special thanks to...
 --------------------
 * [Project Lombok](http://projectlombok.org) for eliminating so much boiler plate code.
