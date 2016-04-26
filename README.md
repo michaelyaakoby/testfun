@@ -27,6 +27,10 @@ TestFun-JEE is mixing existing libraries with our own goodies to deliver a robus
 #### 2.14
 1. Fixed a bug in classpath scanning that failed to run on mac OS because classpath separtor is different then the one in windows.
 
+#### 2.15
+1. Added support for HTTP forms.
+2. Added support for basic authentication.
+
 Usage
 -----
 ### Getting started
