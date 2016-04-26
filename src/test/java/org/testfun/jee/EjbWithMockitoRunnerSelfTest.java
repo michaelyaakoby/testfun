@@ -86,8 +86,8 @@ public class EjbWithMockitoRunnerSelfTest {
 
     @Test
     public void testEjbInjectionIntoEjb() throws ScriptException {
-        assertEquals("7.0", ejb.realAnswer("5+2"));
-        assertEquals("10.0", ejb.realAnswer("(7-4)*3+1"));
+        assertEquals("7", ejb.realAnswer("5+2"));
+        assertEquals("10", ejb.realAnswer("(7-4)*3+1"));
         assertEquals("me", ejb.askSingleton());
     }
 

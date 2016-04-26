@@ -7,23 +7,29 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 public class RestRequest {
 
-    private WebTarget webTarget;
+    private String uri;
+    private int port;
+    private String basicCreds;
 
     private MediaType contentType = MediaType.APPLICATION_XML_TYPE;
     private MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
     private Object body;
+    private Map<String, Object> queryParams = new HashMap<>();
 
     private Response.Status expectedStatus;
 
     private String expectedLocationUri;
 
     public RestRequest(String uri, int port) {
-        UriBuilder path = UriBuilder.fromUri("http://localhost").port(port).path(uri);
-        webTarget = ClientBuilder.newBuilder().build().target(path.build());
+        this.uri = uri;
+        this.port = port;
     }
 
     public RestRequest accept(MediaType acceptMediaType) {
@@ -47,8 +53,13 @@ public class RestRequest {
         return this;
     }
 
+    public RestRequest basicAuth(String userName, String password) {
+        basicCreds = userName + ":" + password;
+        return this;
+    }
+
     public RestRequest queryParam(String param, Object value) {
-        webTarget = webTarget.queryParam(param, value);
+        queryParams.put(param, value);
         return this;
     }
 
@@ -79,6 +90,14 @@ public class RestRequest {
     }
 
     private String doHttpMethod(String method) {
+        String baseUri = basicCreds != null ? "http://" + basicCreds + "@localhost" : "http://localhost";
+        UriBuilder path = UriBuilder.fromUri(baseUri).port(port).path(uri);
+        WebTarget webTarget = ClientBuilder.newBuilder().build().target(path.build());
+
+        for (Map.Entry<String, Object> entry: queryParams.entrySet()) {
+            webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
+        }
+
         Response response;
         try {
             if (body != null) {

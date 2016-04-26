@@ -1,5 +1,7 @@
 package org.testfun.jee;
 
+import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
+import org.jboss.resteasy.plugins.server.embedded.SimplePrincipal;
 import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.junit.rules.MethodRule;
@@ -13,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.Field;
 import java.net.ServerSocket;
+import java.security.Principal;
 
 /**
  * A JUnit rule that launches a JAX-RS server (using RESTeasy and TJWS) running in the same JVM as the test itself.
@@ -103,6 +106,15 @@ public class JaxRsServer implements MethodRule {
 
     public void startJaxRsServer() {
         jaxRsServer = new TJWSEmbeddedJaxrsServer();
+        jaxRsServer.setSecurityDomain(new SecurityDomain() {
+            public Principal authenticate(String username, String password) throws SecurityException {
+                return new SimplePrincipal(username);
+            }
+
+            public boolean isUserInRole(Principal username, String role) {
+                return true;
+            }
+        });
         jaxRsServer.setPort(port);
 
         jaxRsServer.start();
