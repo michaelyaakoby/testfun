@@ -406,6 +406,32 @@ public class RestData {
 }
 ```
 
+#### Application forms support
+If a resource is expecting data from an "application/x-www-form-urlencoded" message, such as in:
+```java
+@POST
+@Path("/form")
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public Response postParam(@FormParam("p1") String p1, @FormParam("p2") String p2)
+{
+    return Response.status(Status.OK).entity(p1 + "-" + p2).build();
+}
+```
+It can be tested as:
+```java
+@Test
+public void postWithForm() throws Exception {
+    String response = jaxRsServer.
+            formRequest("/example/form").
+            withFormParam("p1", "ABCD").
+            withFormParam("p2", "12345").
+            expectStatus(Response.Status.OK).
+            post();
+
+    assertEquals("ABCD-12345", response);
+}
+```
+
 Special thanks to...
 --------------------
 * [Project Lombok](http://projectlombok.org) for eliminating so much boiler plate code.
