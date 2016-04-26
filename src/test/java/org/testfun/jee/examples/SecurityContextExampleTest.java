@@ -1,7 +1,5 @@
 package org.testfun.jee.examples;
 
-import org.jboss.resteasy.plugins.server.servlet.ServletSecurityContext;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +7,6 @@ import org.testfun.jee.EjbWithMockitoRunner;
 import org.testfun.jee.JaxRsServer;
 
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 
 import static org.junit.Assert.assertEquals;
 
