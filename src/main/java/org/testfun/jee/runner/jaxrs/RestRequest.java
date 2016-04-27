@@ -7,6 +7,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +56,11 @@ public class RestRequest {
     }
 
     public RestRequest basicAuth(String userName, String password) {
-        basicCreds = userName + ":" + password;
+        try {
+            basicCreds = URLEncoder.encode(userName, "UTF-8") + ":" + URLEncoder.encode(password, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            basicCreds = userName + ":" + password;
+        }
         return this;
     }
 

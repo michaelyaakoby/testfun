@@ -27,4 +27,16 @@ public class SecurityContextExampleTest {
 
         assertEquals("kuki", response);
     }
+
+    @Test
+    public void getEmailFromSecurityContext() throws Exception {
+
+        String response = jaxRsServer.
+                jsonRequest("/example/user_from_security_context").
+                basicAuth("kuki@puki.org", "kukipuki").
+                expectStatus(Response.Status.OK).
+                get();
+
+        assertEquals("kuki@puki.org", response);
+    }
 }
