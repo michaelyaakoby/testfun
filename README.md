@@ -12,24 +12,27 @@ TestFun-JEE is mixing existing libraries with our own goodies to deliver a robus
 * Simple transaction management.
 
 ### Release Notes
-#### 2.10
+#### 0.10
 1. Replaced the hardcoded 9095 port the JaxRsServer used for binding with "0" which means "get the next available port" - this allows the usage of multiple JaxRsServer instances concurrently towards concurrent tests.
 2. Upgraded many libraries to latest version (its about time...).
 
-#### 2.11
+#### 0.11
 1. Enable finding the port the server that bound to.
 2. Upgraded dependencies.
 
-#### 2.12
+#### 0.12
 1. Upgraded dependencies.
 2. Enable registering @Provider classes.
 
-#### 2.14
+#### 0.14
 1. Fixed a bug in classpath scanning that failed to run on mac OS because classpath separtor is different then the one in windows.
 
-#### 2.15
+#### 0.15
 1. Added support for HTTP forms.
 2. Added support for basic authentication.
+
+#### 0.16
+1. Fixed basic auth so it can handle special characters.
 
 Usage
 -----
