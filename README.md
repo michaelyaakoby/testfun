@@ -1,5 +1,7 @@
 Project TestFun - JEE JUnit Testing Is Fun<br>(no server is needed!)
 ================================================================
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.testfun/jee/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.testfun/jee/)
+
 Project TestFun's goal is to eliminate the common excuse for lack of good unit tests: "testing was too complicated".
 
 TestFun-JEE is mixing existing libraries with our own goodies to deliver a robust but simple JEE junit experience when testing your DAOs (JPA), SLSBs, REST servers (JAX-RS) and more. 
