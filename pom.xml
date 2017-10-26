@@ -5,7 +5,7 @@
 
     <groupId>org.testfun</groupId>
     <artifactId>jee</artifactId>
-    <version>0.17-SNAPSHOT</version>
+    <version>0.17-novity</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -66,10 +66,17 @@
         </dependency>
 
         <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.2_spec</artifactId>
             <version>1.0.0.Final</version>
         </dependency>
+
         <dependency>
             <groupId>org.jboss.spec.javax.xml.rpc</groupId>
             <artifactId>jboss-jaxrpc-api_1.1_spec</artifactId>
