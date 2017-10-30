@@ -23,7 +23,8 @@ public class DependencyInjector {
                 mockRegistrar, // the MockRegistrar injector must be listed before the EJB injector to guarantee that mocks are registered before they are used.
                 new EjbInjector().withMocking(mockRegistrar),
                 new PersistenceContextInjector(),
-                new ResourceInjector().withMocking(mockRegistrar)
+                new ResourceInjector().withMocking(mockRegistrar),
+                new InjectInjector().withMocking(mockRegistrar)
         );
     }
 
