@@ -53,7 +53,8 @@ public class InjectionUtilsTest {
     @Test
     public void readObjectFromField() throws NoSuchFieldException {
         ClassA classA = new ClassA(null, "setting", 56);
-        assertEquals(56, InjectionUtils.readObjectFromField(classA, ClassA.class.getDeclaredField("in")));
+        int in = InjectionUtils.readObjectFromField(classA, ClassA.class.getDeclaredField("in"));
+        assertEquals(56, in);
         assertEquals("setting", InjectionUtils.readObjectFromField(classA, ClassA.class.getDeclaredField("str")));
     }
 

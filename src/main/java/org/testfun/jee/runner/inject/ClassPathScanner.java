@@ -1,7 +1,8 @@
 package org.testfun.jee.runner.inject;
 
 import junit.framework.AssertionFailedError;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testfun.jee.runner.EjbWithMockitoRunnerException;
 
 import java.io.File;
@@ -16,7 +17,7 @@ import static org.junit.Assert.fail;
 
 public class ClassPathScanner {
 
-    private static final Logger LOGGER = Logger.getLogger(ClassPathScanner.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClassPathScanner.class);
 
     public List<String> getResourcesInClassPath() {
         boolean jarScanningEnabled = Boolean.getBoolean("org.testfun.jee.enable_jar_scanning");

@@ -56,7 +56,7 @@ public class EjbWithMockitoRunnerSelfTest {
     private DataSource dataSource;
 
     @Rule
-    public ExpectedException exceptionRule = ExpectedException.none().handleAssertionErrors();
+    public ExpectedException exceptionRule = ExpectedException.none();
 
     @Rule
     public ExpectedConstraintViolation violationThrown = ExpectedConstraintViolation.none();
@@ -108,12 +108,13 @@ public class EjbWithMockitoRunnerSelfTest {
         SomeEntity newSomeEntity = new SomeEntity(0, "name", "address");
         entityManager.persist(newSomeEntity);
         assertTrue("Entity ID > 0", newSomeEntity.getId() > 0);
+        entityManager.flush();
 
         // Use a JDBC connection to read the newly added provider, make sure calling close doesn't close the connection...
         int newId;
         try(Connection connection = dataSource.getConnection()){
             try(Statement statement = connection.createStatement()) {
-                try(ResultSet results = statement.executeQuery("SELECT id FROM some_entity WHERE name='name'")) {
+                try(ResultSet results = statement.executeQuery("SELECT id FROM SomeEntity WHERE name='name'")) {
                     results.next();
                     newId = results.getInt(1);
                 }

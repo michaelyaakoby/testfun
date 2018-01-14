@@ -11,7 +11,6 @@
             <property name="hibernate.connection.url" value="jdbc:hsqldb:file:target/hsql/db"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>

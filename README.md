@@ -36,6 +36,14 @@ TestFun-JEE is mixing existing libraries with our own goodies to deliver a robus
 #### 0.16
 1. Fixed basic auth so it can handle special characters.
 
+#### 0.17
+1. Added injector for javax.inject.Inject annotation (Frank Seidinger)
+
+#### 1.0
+1. Upgrade to Java 8
+2. Upgrade to Maven 3
+3. Upgrade all dependencies
+
 Usage
 -----
 ### Getting started
@@ -67,8 +75,7 @@ This file defines the JDBC driver to be used as well as the "classes" folder con
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306?user=root&amp;password=******"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
-            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
-            
+
             <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
