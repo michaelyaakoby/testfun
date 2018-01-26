@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <resteasy.version>3.0.8.Final</resteasy.version>
+        <resteasy.version>3.1.4.Final</resteasy.version>
     </properties>
 
     <name>JEE JUnit Testing Is Fun</name>
@@ -71,23 +71,23 @@
             <version>8.0</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.2_spec</artifactId>
             <version>1.0.0.Final</version>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.jboss.spec.javax.xml.rpc</groupId>
             <artifactId>jboss-jaxrpc-api_1.1_spec</artifactId>
             <version>1.0.1.Final</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-links</artifactId>
             <version>${resteasy.version}</version>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <artifactId>persistence-api</artifactId>
                     <groupId>javax.persistence</groupId>
@@ -96,7 +96,7 @@
                     <artifactId>hibernate-jpa-2.0-api</artifactId>
                     <groupId>org.hibernate.javax.persistence</groupId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -108,12 +108,12 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
             <version>${resteasy.version}</version>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <artifactId>commons-codec</artifactId>
                     <groupId>commons-codec</groupId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -127,7 +127,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>tjws</artifactId>
+            <artifactId>resteasy-undertow</artifactId>
             <version>${resteasy.version}</version>
         </dependency>
         <dependency>

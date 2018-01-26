@@ -1,9 +1,11 @@
 package org.testfun.jee;
 
+import io.undertow.servlet.api.DeploymentInfo;
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
 import org.jboss.resteasy.plugins.server.embedded.SimplePrincipal;
-import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+import org.jboss.resteasy.util.PortProvider;
 import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
@@ -18,14 +20,14 @@ import java.net.ServerSocket;
 import java.security.Principal;
 
 /**
- * A JUnit rule that launches a JAX-RS server (using RESTeasy and TJWS) running in the same JVM as the test itself.
+ * A JUnit rule that launches a JAX-RS server (using RESTeasy and Undertow) running in the same JVM as the test itself.
  * Injection of EJBs and mocks into the JAX-RS resources requires running the test using the {@link EjbWithMockitoRunner} runner.
  */
 public class JaxRsServer implements MethodRule {
 
-    private int port = 0;
+    private int port = PortProvider.getPort();
 
-    private TJWSEmbeddedJaxrsServer jaxRsServer;
+    private UndertowJaxrsServer jaxRsServer;
 
     private Class[] resourceClasses;
 
@@ -105,27 +107,24 @@ public class JaxRsServer implements MethodRule {
     }
 
     public void startJaxRsServer() {
-        jaxRsServer = new TJWSEmbeddedJaxrsServer();
-        jaxRsServer.setSecurityDomain(new SecurityDomain() {
-            public Principal authenticate(String username, String password) throws SecurityException {
-                return new SimplePrincipal(username);
-            }
+        jaxRsServer = new UndertowJaxrsServer().start();
+        //todo find how to configure auth username/password
+//        jaxRsServer.setSecurityDomain(new SecurityDomain() {
+//            public Principal authenticate(String username, String password) throws SecurityException {
+//                return new SimplePrincipal(username);
+//            }
+//
+//            public boolean isUserInRole(Principal username, String role) {
+//                return true;
+//            }
+//        });
 
-            public boolean isUserInRole(Principal username, String role) {
-                return true;
-            }
-        });
-        jaxRsServer.setPort(port);
-
-        jaxRsServer.start();
-
-        // If no port was set, than a free one was automatically selected - need to find it's number.
-        if (port == 0) {
-            Object server = getFromPrivateField(jaxRsServer, "server");
-            Object acceptor = getFromPrivateField(server, "acceptor");
-            ServerSocket socket = getFromPrivateField(acceptor, "socket");
-            port = socket.getLocalPort();
-        }
+        ResteasyDeployment deployment = new ResteasyDeployment();
+        DeploymentInfo deploymentInfo = jaxRsServer.undertowDeployment(deployment, "/example");
+        deploymentInfo.setClassLoader(getClass().getClassLoader());
+        deploymentInfo.setDeploymentName("testfun");
+        deploymentInfo.setContextPath("/");
+        jaxRsServer.deploy(deploymentInfo);
 
         for (Class aClass : resourceClasses) {
             Object resourceInstance;
@@ -135,23 +134,18 @@ public class JaxRsServer implements MethodRule {
                 throw new IllegalArgumentException(e1);
             }
             DependencyInjector.getInstance().injectDependencies(resourceInstance);
-            getDeployment().getRegistry().addSingletonResource(resourceInstance);
+            deployment.getRegistry().addSingletonResource(resourceInstance);
         }
 
         if (providerClasses != null) {
             for (Class providerClass: providerClasses) {
-                getDeployment().getProviderFactory().registerProvider(providerClass);
+                deployment.getProviderFactory().registerProvider(providerClass);
             }
         }
     }
 
     public void shutdownJaxRsServer() {
         jaxRsServer.stop();
-        getDeployment().stop();
-    }
-
-    public ResteasyDeployment getDeployment() {
-        return jaxRsServer.getDeployment();
     }
 
     private class JaxRsServerStatement extends Statement {
