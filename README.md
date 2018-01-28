@@ -36,6 +36,14 @@ TestFun-JEE is mixing existing libraries with our own goodies to deliver a robus
 #### 0.16
 1. Fixed basic auth so it can handle special characters.
 
+#### 0.17
+1. Added injector for javax.inject.Inject annotation (Frank Seidinger)
+
+#### 1.0
+1. Upgrade to Java 8
+2. Upgrade to Maven 3
+3. Upgrade all dependencies
+
 Usage
 -----
 ### Getting started
@@ -67,8 +75,7 @@ This file defines the JDBC driver to be used as well as the "classes" folder con
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306?user=root&amp;password=******"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
-            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
-            
+
             <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
@@ -214,10 +221,10 @@ public class DaoTest {
 }
 ```
 
-### Bean validation
-To those lucky enough to use [Bean Validation](http://docs.oracle.com/javaee/6/tutorial/doc/gircz.html), TestFun-JEE allows you to easily assert these validations are working (after all, if such annotation is accidentally deleted, the compiler will not complain).
+### Bean validation / Hibernate Validator
+To those lucky enough to use [Hibernate Validator](https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/), TestFun-JEE allows you to easily assert these validations are working (after all, if such annotation is accidentally deleted, the compiler will not complain).
 
-Simply set your failure message expectation before calling the EJB:
+Simply set your failure message expectation before calling the EJB, and don't forget to commit your transcation as that's when the validation is done:
 ```java
 @RunWith(EjbWithMockitoRunner.class)
 public class JpaValidationTest {
@@ -227,6 +234,9 @@ public class JpaValidationTest {
 
     @EJB
     private SomeDao someDao;
+
+    @PersistenceContext(unitName = "TestFun")
+    private EntityManager entityManager;
 
     @Test
     public void validName() {
@@ -238,12 +248,14 @@ public class JpaValidationTest {
     public void nameTooShort() {
         violationThrown.expectViolation("The name must be at least 4 characters");
         someDao.save(new SomeEntity(0, "srt", null));
+        entityManager.getTransaction().commit();
     }
 
     @Test
     public void nameTooLong() {
         violationThrown.expectViolation("The name must be less than 20 characters");
         someDao.save(new SomeEntity(0, "This name should be longer than 20 characters", null));
+        entityManager.getTransaction().commit();
     }
 }
 ```
@@ -296,7 +308,7 @@ public class MockSessionContextTest {
 
 ### Testing JAX-RS resources
 TestFun-JEE leverages RESTeasy's testing framework to enable very simple container-less tests.
-Your resource classes are loaded into a very lightweight JAX-RS server (based on TJWS and RESTeasy) which is running in the same JVM as the test itself.
+Your resource classes are loaded into a very lightweight JAX-RS server (based on Undertow and RESTeasy) which is running in the same JVM as the test itself.
 
 The server is configured and accessed using the JaxRsServer junit rule which is initialized with a list of resource classes to be scanned and deployed.
 
@@ -466,7 +478,7 @@ Special thanks to...
 * [Project Lombok](http://projectlombok.org) for eliminating so much boiler plate code.
 * [Mockito](http://code.google.com/p/mockito/) for its super cool mocking framework.
 * [Junit](http://junit.org/) for setting the goal.
-* [RESTEasy](http://www.jboss.org/resteasy) for its sleek JAX-RS implementation and powerful testing infrastructure (based on TJWS).
+* [RESTEasy](http://www.jboss.org/resteasy) for its sleek JAX-RS implementation and powerful testing infrastructure (based on Undertow).
 * [JsonPath](http://code.google.com/p/json-path/) and [JSONassert](http://jsonassert.skyscreamer.org/) for the awesome JSON parsing and asserting tools.
 
 Advanced settings

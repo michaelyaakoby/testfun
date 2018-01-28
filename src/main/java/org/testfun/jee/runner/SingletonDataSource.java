@@ -1,6 +1,6 @@
 package org.testfun.jee.runner;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.sql.DataSource;
 import java.lang.reflect.InvocationHandler;
@@ -27,10 +27,10 @@ public class SingletonDataSource {
             Connection connection = DriverManager.getConnection(PersistenceXml.getInstnace().getConnectionUrl());
             connection.setAutoCommit(false);
             dataSource = (DataSource) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{DataSource.class}, new NotClosableDataSource(connection));
-            Logger.getLogger(SingletonDataSource.class).info("Data source initialized successfully");
+            LogManager.getLogger(SingletonDataSource.class).info("Data source initialized successfully");
 
         } catch (SQLException e) {
-            Logger.getLogger(SingletonDataSource.class).error("Data source initialization failed", e);
+            LogManager.getLogger(SingletonDataSource.class).error("Data source initialization failed", e);
             throw new EjbWithMockitoRunnerException("Data source initialization failed", e);
         }
     }

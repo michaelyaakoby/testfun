@@ -47,7 +47,9 @@ public class ExpectedConstraintViolation implements MethodRule {
      */
     public void expectViolation(String substring) {
         if (matcher == null) {
-            expect(CombinableMatcher.either(new CausedBy(org.hibernate.exception.ConstraintViolationException.class)).or(new CausedBy(ConstraintViolationException.class)));
+            expect(CombinableMatcher.either(
+                    new CausedBy(org.hibernate.exception.ConstraintViolationException.class))
+                    .or(new CausedBy(ConstraintViolationException.class)));
         }
 
         expectMessage(CoreMatchers.containsString(substring));
@@ -76,6 +78,7 @@ public class ExpectedConstraintViolation implements MethodRule {
                 if (matcher == null) {
                     throw e;
                 }
+                if (e.getCause() != null) e = e.getCause();
                 Assert.assertThat(e, matcher);
                 return;
             }

@@ -18,7 +18,7 @@ public class JaxRsServerTest {
     public JaxRsServer jaxRsServer = JaxRsServer.forResources(TestResource.class);
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none().handleAssertionErrors();
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void putWithHeaders() throws Exception {
