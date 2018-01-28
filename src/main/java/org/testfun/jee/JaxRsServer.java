@@ -1,23 +1,29 @@
 package org.testfun.jee;
 
+import io.undertow.Undertow;
 import io.undertow.servlet.api.DeploymentInfo;
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
 import org.jboss.resteasy.plugins.server.embedded.SimplePrincipal;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
-import org.jboss.resteasy.util.PortProvider;
 import org.junit.rules.MethodRule;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.testfun.jee.runner.DependencyInjector;
+import org.testfun.jee.runner.inject.InjectionUtils;
 import org.testfun.jee.runner.jaxrs.JaxRsException;
 import org.testfun.jee.runner.jaxrs.RestRequest;
+import org.xnio.StreamConnection;
+import org.xnio.channels.AcceptingChannel;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.Field;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.nio.channels.ServerSocketChannel;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * A JUnit rule that launches a JAX-RS server (using RESTeasy and Undertow) running in the same JVM as the test itself.
@@ -25,9 +31,10 @@ import java.security.Principal;
  */
 public class JaxRsServer implements MethodRule {
 
-    private int port = PortProvider.getPort();
+    private int requestedPort = 0;
+    private int port = 0;
 
-    private UndertowJaxrsServer jaxRsServer;
+    private CustomUndertowJaxrsServer jaxRsServer;
 
     private Class[] resourceClasses;
 
@@ -49,19 +56,19 @@ public class JaxRsServer implements MethodRule {
 
     /**
      * Optionally override the default selected port to bind to.
-     * @param port TCP port to listen to
+     * @param requestedPort TCP port to listen to
      * @return a new JaxRsServer
      */
-    public JaxRsServer port(int port) {
+    public JaxRsServer port(int requestedPort) {
         JaxRsServer newServer = new JaxRsServer(resourceClasses);
-        newServer.port = port;
+        newServer.requestedPort = requestedPort;
         newServer.providerClasses = this.providerClasses;
         return newServer;
     }
 
     public JaxRsServer providers(Class... providerClasses) {
         JaxRsServer newServer = new JaxRsServer(resourceClasses);
-        newServer.port = this.port;
+        newServer.requestedPort = this.requestedPort;
         newServer.providerClasses = providerClasses;
         return newServer;
     }
@@ -107,7 +114,11 @@ public class JaxRsServer implements MethodRule {
     }
 
     public void startJaxRsServer() {
-        jaxRsServer = new UndertowJaxrsServer().start();
+        Undertow.Builder builder = Undertow.builder().addHttpListener(requestedPort, "localhost");
+        jaxRsServer = new CustomUndertowJaxrsServer();
+        jaxRsServer.start(builder);
+        port = jaxRsServer.getJaxrsPort();
+//        ((ServerSocketChannelImpl) ((QueuedNioTcpServer) jaxRsServer.server.channels.get(0)).channel).socket.getLocalPort()
         //todo find how to configure auth username/password
 //        jaxRsServer.setSecurityDomain(new SecurityDomain() {
 //            public Principal authenticate(String username, String password) throws SecurityException {
@@ -202,6 +213,19 @@ public class JaxRsServer implements MethodRule {
 
             // finally, restore field's accessibility
             f.setAccessible(previousAccessState);
+        }
+    }
+
+    private class CustomUndertowJaxrsServer extends UndertowJaxrsServer {
+        public int getJaxrsPort() {
+            try {
+                Field channelsField = server.getClass().getDeclaredField("channels");
+                List<AcceptingChannel<? extends StreamConnection>> channels = InjectionUtils.readObjectFromField(server, channelsField);
+                return ((InetSocketAddress)channels.get(0).getLocalAddress()).getPort();
+            } catch (NoSuchFieldException e) {
+                throw new JaxRsException("Failed getting listener port", e);
+            }
+
         }
     }
 }
