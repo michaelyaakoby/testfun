@@ -131,7 +131,7 @@ public class JaxRsServer implements MethodRule {
 //        });
 
         ResteasyDeployment deployment = new ResteasyDeployment();
-        DeploymentInfo deploymentInfo = jaxRsServer.undertowDeployment(deployment, "/example");
+        DeploymentInfo deploymentInfo = jaxRsServer.undertowDeployment(deployment);
         deploymentInfo.setClassLoader(getClass().getClassLoader());
         deploymentInfo.setDeploymentName("testfun");
         deploymentInfo.setContextPath("/");
