@@ -1,8 +1,13 @@
 package org.testfun.jee;
 
 import io.undertow.Undertow;
+import io.undertow.security.idm.Account;
+import io.undertow.security.idm.Credential;
+import io.undertow.security.idm.IdentityManager;
 import io.undertow.servlet.api.DeploymentInfo;
-import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
+import io.undertow.servlet.api.LoginConfig;
+import io.undertow.servlet.api.SecurityConstraint;
+import io.undertow.servlet.api.SecurityInfo;
 import org.jboss.resteasy.plugins.server.embedded.SimplePrincipal;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
@@ -16,14 +21,14 @@ import org.testfun.jee.runner.jaxrs.RestRequest;
 import org.xnio.StreamConnection;
 import org.xnio.channels.AcceptingChannel;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.nio.channels.ServerSocketChannel;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A JUnit rule that launches a JAX-RS server (using RESTeasy and Undertow) running in the same JVM as the test itself.
@@ -114,27 +119,45 @@ public class JaxRsServer implements MethodRule {
     }
 
     public void startJaxRsServer() {
-        Undertow.Builder builder = Undertow.builder().addHttpListener(requestedPort, "localhost");
         jaxRsServer = new CustomUndertowJaxrsServer();
+        Undertow.Builder builder = Undertow.builder().addHttpListener(requestedPort, "localhost");
         jaxRsServer.start(builder);
         port = jaxRsServer.getJaxrsPort();
-//        ((ServerSocketChannelImpl) ((QueuedNioTcpServer) jaxRsServer.server.channels.get(0)).channel).socket.getLocalPort()
-        //todo find how to configure auth username/password
-//        jaxRsServer.setSecurityDomain(new SecurityDomain() {
-//            public Principal authenticate(String username, String password) throws SecurityException {
-//                return new SimplePrincipal(username);
-//            }
-//
-//            public boolean isUserInRole(Principal username, String role) {
-//                return true;
-//            }
-//        });
 
         ResteasyDeployment deployment = new ResteasyDeployment();
         DeploymentInfo deploymentInfo = jaxRsServer.undertowDeployment(deployment);
         deploymentInfo.setClassLoader(getClass().getClassLoader());
         deploymentInfo.setDeploymentName("testfun");
         deploymentInfo.setContextPath("/");
+        deploymentInfo.setLoginConfig(new LoginConfig(HttpServletRequest.BASIC_AUTH, "Login Required"));
+        deploymentInfo.addSecurityConstraint(new SecurityConstraint().setEmptyRoleSemantic(SecurityInfo.EmptyRoleSemantic.AUTHENTICATE));
+        deploymentInfo.setIdentityManager(new IdentityManager() {
+            @Override
+            public Account verify(Account account) {
+                return account;
+            }
+
+            @Override
+            public Account verify(String id, Credential credential) {
+                return new Account() {
+                    @Override
+                    public Principal getPrincipal() {
+                        return new SimplePrincipal(id);
+                    }
+
+                    @Override
+                    public Set<String> getRoles() {
+                        return null;
+                    }
+                };
+
+            }
+
+            @Override
+            public Account verify(Credential credential) {
+                return verify("unknown", credential);
+            }
+        });
         jaxRsServer.deploy(deploymentInfo);
 
         for (Class aClass : resourceClasses) {

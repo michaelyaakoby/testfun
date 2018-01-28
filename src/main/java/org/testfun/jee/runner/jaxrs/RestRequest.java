@@ -1,14 +1,12 @@
 package org.testfun.jee.runner.jaxrs;
 
-
 import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.*;
+import javax.xml.bind.DatatypeConverter;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,11 +54,7 @@ public class RestRequest {
     }
 
     public RestRequest basicAuth(String userName, String password) {
-        try {
-            basicCreds = URLEncoder.encode(userName, "UTF-8") + ":" + URLEncoder.encode(password, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            basicCreds = userName + ":" + password;
-        }
+        basicCreds = userName + ":" + password;
         return this;
     }
 
@@ -96,9 +90,8 @@ public class RestRequest {
     }
 
     private String doHttpMethod(String method) {
-        String baseUri = basicCreds != null ? "http://" + basicCreds + "@localhost" : "http://localhost";
-        UriBuilder path = UriBuilder.fromUri(baseUri).port(port).path(uri);
-        WebTarget webTarget = ClientBuilder.newBuilder().build().target(path.build());
+        UriBuilder path = UriBuilder.fromUri("http://localhost").port(port).path(uri);
+        WebTarget webTarget = ClientBuilder.newClient().register(new AuthFilter()).target(path.build());
 
         for (Map.Entry<String, Object> entry: queryParams.entrySet()) {
             webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
@@ -153,4 +146,21 @@ public class RestRequest {
         }
     }
 
+    private class AuthFilter implements ClientRequestFilter {
+        public void filter(ClientRequestContext requestContext) throws IOException {
+            if (basicCreds != null) {
+                MultivaluedMap<String, Object> headers = requestContext.getHeaders();
+                final String basicAuthentication = getBasicAuthentication();
+                headers.add("Authorization", basicAuthentication);
+            }
+        }
+
+        private String getBasicAuthentication() {
+            try {
+                return "BASIC " + DatatypeConverter.printBase64Binary(basicCreds.getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException ex) {
+                throw new IllegalStateException("Cannot encode with UTF-8", ex);
+            }
+        }
+    }
 }
