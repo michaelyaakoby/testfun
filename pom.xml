@@ -65,29 +65,43 @@
             <version>1.4</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <version>1.0.0.Final</version>
-        </dependency>-->
+            <version>1.0.1.Final</version>
+        </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.jboss.spec.javax.xml.rpc</groupId>
             <artifactId>jboss-jaxrpc-api_1.1_spec</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>-->
+            <version>1.0.2.Final</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-links</artifactId>
             <version>${resteasy.version}</version>
             <!--<exclusions>
+                <exclusion>
+                    <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+                    <groupId>org.jboss.spec.javax.ws.rs</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jboss-el-api_3.0_spec</artifactId>
+                    <groupId>rg.jboss.spec.javax.el</groupId>
+                </exclusion>
                 <exclusion>
                     <artifactId>persistence-api</artifactId>
                     <groupId>javax.persistence</groupId>
