@@ -53,11 +53,11 @@ Using TestFun-JEE requires adding the following dependency to your POM:
 <dependency>
     <groupId>org.testfun</groupId>
     <artifactId>jee</artifactId>
-    <version>0.9</version>
+    <version>1.0</version>
     <scope>test</scope>
 </dependency>
 ```
-*Project is distributed via https://oss.sonatype.org/content/groups/public/org/testfun/jee/0.8/*
+*Project is distributed via https://oss.sonatype.org/content/groups/public/org/testfun/jee/1.0/*
 #### Configuring JPA
 JPA support is configured via the `src/test/resources/META-INF/persistence.xml`. 
 This file defines the JDBC driver to be used as well as the "classes" folder containing the entities.
